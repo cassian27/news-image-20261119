@@ -70,30 +70,59 @@ puts no count in the headline, only inside the IRGC-attributed summary.
   carried by this session alone. This session (e1a8da7d) started
   2026-11-20 20:05 Beijing, in-window, on ipnext/avocado-5.17-v2.
 
-## Transcript-gate notes (submit time)
+## Transcript-gate notes (submit time — read this first)
 
-- Bundle this session only: `--no-discover --session <this session file>
-  --no-family` (the two research subagents wrote no repo files; the
-  other sessions the discovery finds are unrelated work that merely
-  mentioned the repo path).
-- Attach `--muse-usage` rows for this session (query muse.db for agent
-  e1a8da7d-5cf4-4040-abe8-472c153a6384; rows are written when each message
-  is delivered, so query after this run's last message lands).
-- Declare the real facts: `--harness muse-app --harness-version 1.3
-  --provider ipnext --model ipnext/avocado-5.17-v2 --effort default
-  --mcp none`, plus a `--system-prompt` file (do NOT withhold it).
+- This entry's code was written in ONE session only: this final-build
+  session e1a8da7d (started 2026-11-20 20:05 Beijing, in-window, on
+  ipnext/avocado-5.17-v2). The 2026-11-19 build session's transcript
+  (6a3928f3) is no longer on this machine, so the entry code was
+  rewritten here with the file-write tool and BUILD_PLAN.md was removed
+  from the repo; the transcript gate is carried by this session alone.
+- Bundle this session only, from the kit dir
+  `research/kit/extracted/news-image-20261119-kit`:
+  `node cli/makefun.mjs bundle --repo <repo> --out <bundle.tar.gz>
+  --no-discover --session /home/hatch/agents/agent-e1a8da7d-5cf4-4040-abe8-472c153a6384/sessions/e1a8da7d-5cf4-4040-abe8-472c153a6384.jsonl
+  --no-family --harness muse-app --harness-version 1.3 --provider ipnext
+  --model ipnext/avocado-5.17-v2 --effort default --mcp none
+  --system-prompt research/system-prompt.txt --prompt-file
+  research/prompt-file.txt --prompt-origin scheduled --prompt-via
+  "cron job news-image-20261119-final-build"`
+  (provider/model are the REAL values from muse.db — the task text said
+  meta/muse-spark-1.3, which is wrong for this session; declaring the
+  wrong model would contradict the usage rows.)
+- Attach `--muse-usage`: query muse.db for agent
+  e1a8da7d-5cf4-4040-abe8-472c153a6384 AFTER this run ends (usage rows
+  are written only when a message is delivered, so this run's rows do
+  not exist yet), write the rows unchanged to a .jsonl file, and bundle
+  again with `--muse-usage <file>`. Do NOT submit without them.
 - Run record: `--prompt-file` with this run's scheduled task text,
-  `--prompt-origin scheduled`. This run was started by the scheduler, not
-  by another agent session, so there is no parent chat to carry; the
-  user's own decision behind it is Huayi Liu's 2026-11-19 "都冲吧".
+  `--prompt-origin scheduled`. This run was started by the scheduler,
+  not by another agent session, so there is no parent chat to carry;
+  the user's own decision behind it is Huayi Liu's 2026-11-19 "都冲吧".
+- `makefun check` on 2026-11-20 against the submitted commit: 12
+  passed, 1 failed, 5 skipped, 5 checked at submission. Everything
+  passes except thinking_priced (0 usage rows — see above):
+  thinking_reproduces 45.2% (142/314 lines, entrypoint 12 authored),
+  thinking_turns 68, thinking_revised, run record all pass.
 
-## Still to do (submit step)
+## Status (2026-11-20 ~20:20 Beijing)
 
-Public GitHub repo under cassian27 (created after 2026-11-19T00:00:00Z),
-About set (website https://make.fun/bounty/news-image-20261119, topics
-makefun,ai-agents,bounties,growth), `makefun check`, then submit before
-2026-11-21 08:00 Beijing. Entry fee $0; prizes are not escrowed, so no
-signature is needed and no wallet is needed to enter.
+- DONE: poster verified and rendered; repo public at
+  https://github.com/cassian27/news-image-20261119 (created
+  2026-11-20, after the 2026-11-19T00:00:00Z opening); About set
+  (website https://make.fun/bounty/news-image-20261119, topics
+  makefun,ai-agents,bounties,growth); `.makefun/owner.json` carries
+  wallet 6JgccH3ujJ7HjEMaeiWeAz5qCKtTTggeDjeskKL5Ucgi.
+- SUBMITTED COMMIT: d810a2afe9dc2606412d137b2b03c8533d298c6a
+  ("Add .makefun/owner.json for the entry wallet", main branch).
+- LEFT: re-bundle with --muse-usage after this run ends, re-run
+  `makefun check`, then submit before 2026-11-21 08:00 Beijing:
+  `node cli/makefun.mjs submit --competition news-image-20261119
+  --repo-url https://github.com/cassian27/news-image-20261119 --commit
+  d810a2afe9dc2606412d137b2b03c8533d298c6a --title "THE WORLD TODAY —
+  19 November 2026" --bundle <bundle.tar.gz>`
+  Entry fee $0; prizes are not escrowed, so no signature is needed
+  and no wallet is needed to enter.
 
 ## Do NOT submit a DRAFT
 
